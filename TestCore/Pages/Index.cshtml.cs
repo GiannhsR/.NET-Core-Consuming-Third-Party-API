@@ -6,19 +6,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using TestCore.Services;
 using TestCore.HelperClasses;
 using System.ComponentModel.DataAnnotations;
+using TestCore.DTO;
+
 namespace TestCore.Pages
 {
-    public class RenderSummonerModel : PageModel
+    public class Index : PageModel
     {
         private readonly ISearchSummonerService _searchSummoner;
-
-        public string _content { get; set; }
+        private readonly IMatchHistoryService _matchHistory;
+        public SummonerDTO _summonerDTO;
+        public MatchHistoryDTO _matchHistoryDTO;
         [BindProperty]
         public InputModel Input { get; set; }
         public string API_KEY { get; set; }
-        public RenderSummonerModel(ISearchSummonerService searchSummoner)
+        public Index(ISearchSummonerService searchSummoner, IMatchHistoryService matchHistory)
         {
             _searchSummoner = searchSummoner;
+            _matchHistory = matchHistory;
         }
 
         public void OnGet()
@@ -31,7 +35,8 @@ namespace TestCore.Pages
                 return Page();
             }
 
-            _content = await _searchSummoner.SearchSummonerByNameAndRegion(Input.SearchTerm, Input.SelectedRegion);
+            _summonerDTO = await _searchSummoner.SearchSummonerByNameAndRegionAsync(Input.SearchTerm, Input.SelectedRegion);
+            _matchHistoryDTO = await _matchHistory.MatchHistoryByAccountIdAsync(_summonerDTO.AccountId);
             return Page();
         }
     }

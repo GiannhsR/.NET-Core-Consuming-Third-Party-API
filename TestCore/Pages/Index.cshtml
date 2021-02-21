@@ -1,5 +1,5 @@
 ﻿@page
-@model TestCore.Pages.RenderSummonerModel
+@model TestCore.Pages.Index
 @{
     ViewData["Title"] = "Home";
 }
@@ -31,5 +31,28 @@
 </form>
 
 <div>
-    <p>@Model._content</p>
+    @if (Model._summonerDTO != null)
+    {
+        <h2>Summoner:</h2>
+        <p>@Model._summonerDTO.Name</p>
+        <p>@Model._summonerDTO.SummonerLevel</p>
+        <br />
+        if (Model._matchHistoryDTO != null)
+        {
+            <h2>Match History</h2>
+            <p>Model._matchHistoryDTO</p>
+            <h4>Total Games:</h4>
+            <p>@Model._matchHistoryDTO.TotalGames</p>
+            <ul>
+                @{
+                    foreach(var match in Model._matchHistoryDTO.Matches)
+                    {
+                                <li>@match.PlatformId</li>
+                                <li>@match.Champion</li>
+                                <li>@match.Season</li>
+                    }
+                }
+            </ul>
+        }
+    }
 </div>

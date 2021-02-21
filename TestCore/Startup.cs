@@ -28,6 +28,7 @@ namespace TestCore
             services.AddRazorPages();
             services.Configure<AppSettings>(Configuration.GetSection("API_KEY"));
             services.AddScoped<ISearchSummonerService>();
+            services.AddScoped<IMatchHistoryService>();
             services.AddHttpClient();
         }
 

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using TestCore.HelperClasses;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using Newtonsoft.Json;
+using TestCore.DTO;
 
 namespace TestCore.Services
 {
@@ -28,7 +30,7 @@ namespace TestCore.Services
             return _config.GetValue<string>("API_KEY");
         }
 
-        public async Task<string> SearchSummonerByNameAndRegion(String searchTerm,String selectedRegion)
+        public async Task<SummonerDTO> SearchSummonerByNameAndRegionAsync(String searchTerm,String selectedRegion)
         {
             var uri = String.Concat("https://",RetrieveRegion(selectedRegion),SummonerByName,searchTerm,"?api_key=",RetrieveApiKey());
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
@@ -36,9 +38,10 @@ namespace TestCore.Services
             var client = _httpClientFactory.CreateClient();
 
             var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
 
-            return content;
+            return JsonConvert.DeserializeObject<SummonerDTO>(content);
         }
 
         public string RetrieveRegion(string selectedRegion)
