@@ -1,0 +1,35 @@
+﻿@page
+@model TestCore.Pages.RenderSummonerModel
+@{
+    ViewData["Title"] = "Home";
+}
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div id="Region">
+        <p>Region:</p>
+        <ul>
+            <li>
+                <input id="EUNE" type="radio" asp-for="Input.SelectedRegion" value="EUNE" />EUNE
+            </li>
+            <li>
+
+                <input id="EUW" type="radio" asp-for="Input.SelectedRegion" value="EUW" />EUW
+            </li>
+            <li>
+                <input id="NA" type="radio" asp-for="Input.SelectedRegion" value="NA" />NA
+            </li>
+        </ul>
+        <span asp-validation-for="Input.SelectedRegion" class="text-danger"></span>
+    </div>
+    <div id="Search">
+        <p>Search Summoner</p>
+        <label for="searchInput">Search term:</label>
+        <input id="searchInput" asp-for="Input.SearchTerm" />
+        <span asp-validation-for="Input.SearchTerm" class="text-danger"></span>
+        <input type="submit" value="Search" />
+    </div>
+</form>
+
+<div>
+    <p>@Model._content</p>
+</div>
