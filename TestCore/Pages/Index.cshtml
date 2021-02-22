@@ -1,7 +1,11 @@
 ﻿@page
 @model TestCore.Pages.Index
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Home";
+}
+@section Sidebar{
+    <p>This is the sidebar content</p>
 }
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -39,20 +43,25 @@
         <br />
         if (Model._matchHistoryDTO != null)
         {
-            <h2>Match History</h2>
-            <p>Model._matchHistoryDTO</p>
-            <h4>Total Games:</h4>
-            <p>@Model._matchHistoryDTO.TotalGames</p>
-            <ul>
-                @{
-                    foreach(var match in Model._matchHistoryDTO.Matches)
-                    {
-                                <li>@match.PlatformId</li>
-                                <li>@match.Champion</li>
-                                <li>@match.Season</li>
+            if (Model._matchHistoryDTO.Matches == null)
+            {
+                <h4>No recent match history found.</h4>
+            }
+            else
+            { <h2>Match History</h2>
+                <p>Model._matchHistoryDTO</p>
+                <h4>Total Games:</h4>
+                <p>@Model._matchHistoryDTO.TotalGames</p>
+                <ul>
+                    @{
+                        foreach (var match in Model._matchHistoryDTO.Matches)
+                        {
+                            <li>@match.PlatformId</li>
+                            <li>@match.Champion</li>
+                            <li>@match.Season</li>
+                        }
                     }
-                }
-            </ul>
+                </ul>}
         }
     }
 </div>

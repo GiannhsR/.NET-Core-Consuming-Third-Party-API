@@ -12,22 +12,30 @@ namespace TestCore.Pages
 {
     public class Index : PageModel
     {
-        private readonly ISearchSummonerService _searchSummoner;
-        private readonly IMatchHistoryService _matchHistory;
+        //Services
+        private readonly ISearchSummonerService _searchSummonerService;
+        private readonly IMatchHistoryService _matchHistoryService;
+        public readonly IRetrieveRegionService _retrieveRegionService;
+
+        //DTOs
         public SummonerDTO _summonerDTO;
         public MatchHistoryDTO _matchHistoryDTO;
+
+        private string RetrievedRegion { get; set; }
         [BindProperty]
         public InputModel Input { get; set; }
         public string API_KEY { get; set; }
-        public Index(ISearchSummonerService searchSummoner, IMatchHistoryService matchHistory)
+        public Index(ISearchSummonerService searchSummoner, IMatchHistoryService matchHistory, IRetrieveRegionService retrieveRegion)
         {
-            _searchSummoner = searchSummoner;
-            _matchHistory = matchHistory;
+            _searchSummonerService = searchSummoner;
+            _matchHistoryService = matchHistory;
+            _retrieveRegionService = retrieveRegion;
         }
 
         public void OnGet()
         {
         }
+
         public async Task<IActionResult> OnPost(InputModel Input)
         {
             if (!ModelState.IsValid)
@@ -35,8 +43,9 @@ namespace TestCore.Pages
                 return Page();
             }
 
-            _summonerDTO = await _searchSummoner.SearchSummonerByNameAndRegionAsync(Input.SearchTerm, Input.SelectedRegion);
-            _matchHistoryDTO = await _matchHistory.MatchHistoryByAccountIdAsync(_summonerDTO.AccountId);
+            RetrievedRegion = _retrieveRegionService.RetrieveRegion(Input.SelectedRegion);
+            _summonerDTO = await _searchSummonerService.SearchSummonerByNameAndRegionAsync(Input.SearchTerm, RetrievedRegion);
+            _matchHistoryDTO = await _matchHistoryService.MatchHistoryByAccountIdAndRegionAsync(_summonerDTO.AccountId, RetrievedRegion);
             return Page();
         }
     }
