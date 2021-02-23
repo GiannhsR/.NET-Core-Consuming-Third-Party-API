@@ -1,12 +1,11 @@
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TestCore.Services;
-using TestCore.HelperClasses;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using TestCore.DTO;
+using TestCore.Services;
 
 namespace TestCore.Pages
 {
@@ -22,9 +21,19 @@ namespace TestCore.Pages
         public MatchHistoryDTO _matchHistoryDTO;
 
         private string RetrievedRegion { get; set; }
+
+        public IEnumerable<SelectListItem> Items { get; set; }
+            = new List<SelectListItem>
+            {
+            new SelectListItem{Value= "csharp", Text="C#"},
+            new SelectListItem{Value= "python", Text= "Python"},
+            new SelectListItem{Value= "cpp", Text="C++"},
+            new SelectListItem{Value= "java", Text="Java"},
+            new SelectListItem{Value= "js", Text="JavaScript"},
+            new SelectListItem{Value= "ruby", Text="Ruby"},
+            };
         [BindProperty]
         public InputModel Input { get; set; }
-        public string API_KEY { get; set; }
         public Index(ISearchSummonerService searchSummoner, IMatchHistoryService matchHistory, IRetrieveRegionService retrieveRegion)
         {
             _searchSummonerService = searchSummoner;
@@ -32,11 +41,11 @@ namespace TestCore.Pages
             _retrieveRegionService = retrieveRegion;
         }
 
-        public void OnGet()
-        {
-        }
+        public void OnGet() { }
 
-        public async Task<IActionResult> OnPost(InputModel Input)
+        public void OnPost() { }
+
+        public async Task<IActionResult> OnPostSearchSummonerAsync(InputModel Input)
         {
             if (!ModelState.IsValid)
             {
@@ -57,6 +66,7 @@ namespace TestCore.Pages
         public string SearchTerm { get; set; }
         [Required(ErrorMessage = "Required")]
         public string SelectedRegion { get; set; }
+        public string SelectedValue1 { get; set; } 
     }
 }
 
