@@ -9,10 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using Newtonsoft.Json;
 using TestCore.DTO;
-
 namespace TestCore.Services
 {
-    public class ISearchSummonerService
+    public class ISearchSummonerService 
     {
         private const string SummonerByNameEndpoint = "/lol/summoner/v4/summoners/by-name/";
         private readonly IHttpClientFactory _httpClientFactory;

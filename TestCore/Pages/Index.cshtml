@@ -26,14 +26,10 @@
         <p>Search Summoner</p>
         <label asp-for="Input.SearchTerm">Search term:</label>
         <input asp-for="Input.SearchTerm" />
-        <span asp-validation-for="Input.SearchTerm" class="text-danger" asp-page-handler="searchsummoner"></span>
+        <span asp-validation-for="Input.SearchTerm" class="text-danger"></span>
         <input type="submit" value="Search" />
     </div>
 </form>
 
-<partial name="_MatchHistory" />
 
-<div>
-    <select asp-for="Input.SelectedValue1"
-            asp-items="Model.Items"></select>
-</div>
+<partial name="_MatchHistory" />

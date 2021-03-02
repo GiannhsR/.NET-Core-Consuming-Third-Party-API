@@ -5,7 +5,6 @@
         <h2>Summoner:</h2>
         <p>@Model._summonerDTO.Name</p>
         <p>@Model._summonerDTO.SummonerLevel</p>
-        <br />
         if (Model._matchHistoryDTO != null)
         {
             if (Model._matchHistoryDTO.Matches == null)
@@ -14,19 +13,17 @@
             }
             else
             { <h2>Match History</h2>
-                <p>Model._matchHistoryDTO</p>
                 <h4>Total Games:</h4>
                 <p>@Model._matchHistoryDTO.TotalGames</p>
                 <ul>
                     @{
-                        foreach (var match in Model._matchHistoryDTO.Matches)
+                        foreach (var match in Model._champions)
                         {
-                            <li>@match.PlatformId</li>
-                            <li>@match.Champion</li>
-                            <li>@match.Season</li>
+                            <li>@match.ChampionName</li>
                         }
                     }
-                </ul>}
+                </ul>
+            }
         }
     }
 </div>

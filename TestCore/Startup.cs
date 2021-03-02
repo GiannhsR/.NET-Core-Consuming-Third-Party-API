@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestCore.DAL.Models;
+using TestCore.DAL.RepositoryServices;
 using TestCore.HelperClasses;
 using TestCore.Services;
+using TestCore.Services.BackgroundServices;
 
 namespace TestCore
 {
@@ -26,11 +30,20 @@ namespace TestCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.Configure<DataDragonChampionDatabaseSettings>(
+                Configuration.GetSection(nameof(DataDragonChampionDatabaseSettings)));
+
+            services.AddSingleton<IDataDragonChampionDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<DataDragonChampionDatabaseSettings>>().Value);
+
             services.Configure<AppSettings>(Configuration.GetSection("API_KEY"));
+
             services.AddScoped<IRetrieveRegionService>();
             services.AddScoped<IRetrieveApiKeyService>();
             services.AddScoped<ISearchSummonerService>();
             services.AddScoped<IMatchHistoryService>();
+            services.AddSingleton<IChampionsService>();
             services.AddHttpClient();
         }
 
