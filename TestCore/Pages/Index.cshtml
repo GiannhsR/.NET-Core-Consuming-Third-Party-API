@@ -30,6 +30,6 @@
         <input type="submit" value="Search" />
     </div>
 </form>
-
-
+@{var endIndex = 20; }
+<input type="button" onclick="SetEndIndex(@endIndex)" value="SetIndex" />
 <partial name="_MatchHistory" />

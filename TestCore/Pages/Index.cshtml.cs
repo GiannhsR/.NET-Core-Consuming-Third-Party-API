@@ -42,7 +42,7 @@ namespace TestCore.Pages
 
             RetrievedRegion = _retrieveRegionService.RetrieveRegion(Input.SelectedRegion);
             _summonerDTO = await _searchSummonerService.SearchSummonerByNameAndRegionAsync(Input.SearchTerm, RetrievedRegion);
-            _matchHistoryDTO = await _matchHistoryService.MatchHistoryByAccountIdAndRegionAsync(_summonerDTO.AccountId, RetrievedRegion);
+            _matchHistoryDTO = await _matchHistoryService.MatchHistoryByAccountIdAndRegionAsync(_summonerDTO.AccountId, RetrievedRegion, endIndex: 10);
             _champions = await _matchHistoryService.MapMatchHistoryAPIDataToDataDragonAsync(_matchHistoryDTO);
             return Page();
         }
@@ -55,6 +55,7 @@ namespace TestCore.Pages
         public string SearchTerm { get; set; }
         [Required(ErrorMessage = "Required")]
         public string SelectedRegion { get; set; }
+        public int EndIndex { get; set; } = 10;
     }
 }
 

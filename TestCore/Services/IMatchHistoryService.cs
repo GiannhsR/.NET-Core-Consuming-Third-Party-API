@@ -25,9 +25,13 @@ namespace TestCore.Services
             _championsService = championsService;
         }
 
-        public async Task<MatchHistoryDTO> MatchHistoryByAccountIdAndRegionAsync(string accountId, string selectedRegion)
+        public async Task<MatchHistoryDTO> MatchHistoryByAccountIdAndRegionAsync(string accountId, string selectedRegion,int endIndex=0,int beginIndex=0)
         {
-            var uri = String.Concat("https://", selectedRegion, MatchHistoryByAccountId, accountId, "?api_key=", _retrieveApiKeyService.RetrieveApiKey());
+            if(endIndex != 10)
+            {
+                beginIndex = endIndex;
+            }
+            var uri = String.Concat("https://", selectedRegion, MatchHistoryByAccountId, accountId,"?beginIndex=", beginIndex.ToString(), "&endIndex=" ,endIndex.ToString(), "&api_key=", _retrieveApiKeyService.RetrieveApiKey());
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             var client = _httpClientFactory.CreateClient();
             var response = await client.SendAsync(request);
@@ -42,11 +46,11 @@ namespace TestCore.Services
             {
                 var champion = await _championsService.GetAsync(match.Champion.ToString());
                 ChampionDTO championDTO = new ChampionDTO();
-                championDTOList.Add(this.MapChampionToChampionDTO(champion, championDTO));
+                championDTOList.Add(MapChampionToChampionDTO(champion, championDTO));
             }
             return championDTOList;
         }
-        private ChampionDTO MapChampionToChampionDTO(Champion champion, ChampionDTO championDTO)
+        private static ChampionDTO MapChampionToChampionDTO(Champion champion, ChampionDTO championDTO)
         {
             championDTO.Id = champion.Id;
             championDTO.ChampionId = champion.ChampionId;

@@ -15,14 +15,18 @@
             { <h2>Match History</h2>
                 <h4>Total Games:</h4>
                 <p>@Model._matchHistoryDTO.TotalGames</p>
-                <ul>
-                    @{
+                <div>
+                    @{ var i = 0;
                         foreach (var match in Model._champions)
                         {
-                            <li>@match.ChampionName</li>
+                            i++;
+                            <h5>Game @i</h5>
+                            <div>
+                                <p>@match.ChampionName</p>
+                            </div>
                         }
                     }
-                </ul>
+                </div>
             }
         }
     }
