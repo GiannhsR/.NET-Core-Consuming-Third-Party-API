@@ -2,15 +2,29 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your Javascript code.
-function SetEndIndex(value) {
+function SetEndIndex(endIndexValue) {
     $.ajax({
-        url: "/Index/SetEndIndex",
+        url: "Index/OnGetShowMoreAsync",
         type: "get", //send it through get method
-        data: { "value": value },
+        data: { "endIndexValue": endIndexValue },
         success: function (data) {
             alert(value)
         },
         error: function (xhr) {
         }
     });
+}
+
+function clickCounter() {
+    if (typeof (Storage) !== "undefined") {
+        if (sessionStorage.clickcount) {
+            sessionStorage.clickcount = Number(sessionStorage.clickcount) + 1;
+            return 
+        } else {
+            sessionStorage.clickcount = 1;
+        }
+        document.getElementById("result").innerHTML = "You have clicked the button " + sessionStorage.clickcount + " time(s) in this session.";
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+    }
 }

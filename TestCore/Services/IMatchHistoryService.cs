@@ -27,10 +27,6 @@ namespace TestCore.Services
 
         public async Task<MatchHistoryDTO> MatchHistoryByAccountIdAndRegionAsync(string accountId, string selectedRegion,int endIndex=0,int beginIndex=0)
         {
-            if(endIndex != 10)
-            {
-                beginIndex = endIndex;
-            }
             var uri = String.Concat("https://", selectedRegion, MatchHistoryByAccountId, accountId,"?beginIndex=", beginIndex.ToString(), "&endIndex=" ,endIndex.ToString(), "&api_key=", _retrieveApiKeyService.RetrieveApiKey());
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
             var client = _httpClientFactory.CreateClient();

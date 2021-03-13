@@ -25,11 +25,10 @@
     <div class="form-group" id="Search">
         <p>Search Summoner</p>
         <label asp-for="Input.SearchTerm">Search term:</label>
-        <input asp-for="Input.SearchTerm" />
+        <input id="searchSummonerBtn" asp-for="Input.SearchTerm" />
         <span asp-validation-for="Input.SearchTerm" class="text-danger"></span>
         <input type="submit" value="Search" />
     </div>
 </form>
-@{var endIndex = 20; }
-<input type="button" onclick="SetEndIndex(@endIndex)" value="SetIndex" />
+
 <partial name="_MatchHistory" />

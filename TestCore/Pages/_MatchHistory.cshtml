@@ -28,6 +28,13 @@
                     }
                 </div>
             }
+            <form asp-page="Index" asp-page-handler="ShowMore" method="get">
+                <input type="text" id="myInput1" asp-for="Input.SearchTerm" style="display:none" />
+                <input type="text" id="myInput2" asp-for="Input.SelectedRegion" style="display:none" />
+                <input type="text" id="myInput3" asp-for="Input.EndIndex" style="display:none" value="20" />
+                <button type="submit" id="myBtn">Show More</button>
+                <div id="result"></div>
+            </form>
         }
     }
 </div>
