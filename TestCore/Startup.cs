@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,9 @@ namespace TestCore
                 .AddEntityFrameworkStores<AppDbContext>();
 
             services.Configure<AppSettings>(Configuration.GetSection("API_KEY"));
+
+            services.AddTransient<IEmailSender, IEmailSenderService>();
+            services.Configure<IAuthMessageSenderOptionsService>(Configuration);
 
             services.AddScoped<IRetrieveRegionService>();
             services.AddScoped<IRetrieveApiKeyService>();
