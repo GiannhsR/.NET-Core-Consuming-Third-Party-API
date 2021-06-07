@@ -40,7 +40,6 @@ namespace TestCore.DAL.RepositoryServices
                     SearchedSummonerName = s.SearchedSummonerName
                 })
                 .SingleOrDefaultAsync();
-
         }
 
         public async Task UpdateSearch(SummonerDTO summonerDTO)

@@ -46,10 +46,11 @@ namespace TestCore.Pages
             _myDatabaseService = myDatabaseService;;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public  IActionResult OnGetAsync()
         {
-            await _myDatabaseService.GetSearchesAsync();
-            await _myDatabaseService.GetSingleSearchAsync(1);
+            //Database example
+           // await _myDatabaseService.GetSearchesAsync();
+           // await _myDatabaseService.GetSingleSearchAsync(1);
             return Page();
         }
 

@@ -50,8 +50,14 @@ namespace TestCore
             services.AddScoped<ISearchSummonerService>();
             services.AddScoped<IMatchHistoryService>();
             services.AddScoped<IMyDatabaseService>();
-
             services.AddSingleton<IChampionsService>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("HassFullNamePolicyy",
+                    policyBuilder => policyBuilder
+                        .RequireClaim("FullName", "test"));
+            });
 
             services.AddHttpClient();
         }
@@ -72,9 +78,10 @@ namespace TestCore
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+                    {
+                    // Require Authorization for all your Razor Pages
+                    endpoints.MapRazorPages().RequireAuthorization();
+                    });
         }
     }
 }
